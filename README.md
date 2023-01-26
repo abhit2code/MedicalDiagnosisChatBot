@@ -1,6 +1,7 @@
-A Chatbot Where the user first self reports the symptoms and then the Chatbots inquire more symptoms to arrive at the diagnosis result.
+A Chatbot where the user first self reports the symptoms and then the Chatbots inquire more symptoms to arrive at the diagnosis result.
 
 Currently the chatbot supports following Diseases Medical Diagnosis:
+
 Esophagitis, 
 Enteritis, 
 Asthma, 
