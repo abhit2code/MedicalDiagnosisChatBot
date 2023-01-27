@@ -3,11 +3,15 @@ version: "3.1"
 intents:
   - greet
   - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
   - bot_challenge
+  - self_report:
+      use_entities: true
+
+entities:
+ - suffering
+ - notSuffering
+ - PersonSuffering
+ - symptom
 
 responses:
   utter_greet:
