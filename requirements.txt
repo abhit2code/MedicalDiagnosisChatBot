@@ -3,7 +3,9 @@ spacy
 
 '''
 python3 -m spacy download en_core_web_md
-rasa run --enable-api -m models/<modelName> eg - current model: nlu-20230128-002131-smart-collateral.tar.gz
+rasa run --enable-api -m models/nlu-20230206-105028-tranquil-line.tar.gz eg - current model: nlu-20230128-002131-smart-collateral.tar.gz
 run the above ^^ command inside the NLU directory or add the exact path
 curl localhost:5005/model/parse -d '{"text":"hello"}'
 '''
+
+# !python -m spacy download en_core_web_sm

@@ -38,9 +38,9 @@ pipeline:
       address: False
       email: True
 - name: "EntitySynonymMapper"
-- name: DIETClassifier
-  epochs: 100
-  constrain_similarities: true
+# - name: DIETClassifier
+#   epochs: 100
+#   constrain_similarities: true
 - name: "SklearnIntentClassifier"
   # - name: WhitespaceTokenizer
   # - name: RegexFeaturizer
