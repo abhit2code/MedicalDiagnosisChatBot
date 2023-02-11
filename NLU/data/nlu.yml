@@ -28,7 +28,7 @@ nlu:
     - see you around
     - bye bye
     - see you later
-- intent: bot_challenge
+- intent: showing_gratitude
   examples: |
     - [thanks]{"entity": "gratitude"} for the help
     - [thanks]{"entity": "gratitude"}

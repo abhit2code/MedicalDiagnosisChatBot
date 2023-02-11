@@ -29,7 +29,7 @@ from sklearn.metrics import classification_report
 
 
 PersonSuffering = "user"
-question_asking_templates = ["was there any symptom like {}?", "Did you noticed this {}", "Did {0} showed {1}?", "Did {0} faced this {1}"]
+question_asking_templates = ["was there any symptom like {}?", "was {} observed?", "Did {0} showed {1}?", "Did {0} faced {1}"]
 user_symptoms = {}
 user_symptoms_yes_lst = []
 
@@ -61,11 +61,16 @@ def extract_symptoms_self_report(info_dict):
     return flag
 
 def get_info_dict(user_reply):
-    text_dict = {"text": user_reply}
-    process = subprocess.run(['curl', 'localhost:5005/model/parse', '-d', json.dumps(text_dict)],
+    text_dict = {"title": "Wget POST","text": user_reply,"userId":1}
+    process = subprocess.run(['wget', '--method=post', '-O-', '-q', '--body-data=' + json.dumps(text_dict), 'localhost:5005/model/parse'],
                             stdout=subprocess.PIPE,
                             universal_newlines=True, stderr=subprocess.PIPE, text=True)
     return eval(process.stdout)
+    # text_dict = {"text": user_reply}
+    # process = subprocess.run(['curl', 'localhost:5005/model/parse', '-d', json.dumps(text_dict)],
+    #                         stdout=subprocess.PIPE,
+    #                         universal_newlines=True, stderr=subprocess.PIPE, text=True)
+    # return eval(process.stdout)
 
 
 
@@ -124,7 +129,7 @@ def predict_questions():
     stop = False
     for d in diseases:
         if stop == False:
-            disease_symptoms = [symp for symp in symptom_disease(train, d) if symp not in user_symptoms_yes_lst]
+            disease_symptoms = [symp for symp in symptom_disease(train, d) if symp not in list(user_symptoms.keys())]
             # print("disease_symptoms:", disease_symptoms)
             stop = printQuestionAndTakeInput(disease_symptoms)
         else:
@@ -139,6 +144,7 @@ def interact():
     while(True):
         user_reply = input(">>").lower()
         info_dict = get_info_dict(user_reply)
+        # print(info_dict)
         if(info_dict['intent']["name"]=='greet'):
             print(give_greetings_reply())
         elif(info_dict['intent']["name"]=='self_report'):
@@ -150,9 +156,12 @@ def interact():
                 print()
                 print("POSSIBLE DISEASE:", disease[0])
                 print("DESCRIPTION ABOUT THE DISEASE:\n", description[disease[0]])
-                an = input("FROM HOW MANY DAYS YOU ARE FEELING THOSE SYMPTOMS?")
+                an = input("FROM HOW MANY DAYS THESE SYMPTOMS ARE OBSERVED?")
                 if calc_condition(user_symptoms_yes_lst,int(an)) == 1:
-                    print("SUGGESTION: you should take the consultation from doctor!!")
+                    if(PermissionError!="user"):
+                        print("SUGGESTION: your {} should take the consultation from doctor!!".format(PersonSuffering))    
+                    else:
+                        print("SUGGESTION: you should take the consultation from doctor!!")
                 else : 
                     print("SUGGESTED PRECAUTIONS:")
                     for e in precaution[disease[0]]:
@@ -163,7 +172,7 @@ def interact():
             else:
                 print("There is no symptom reported. Please Report atleast one symptom!!")
                 continue
-        elif(info_dict['intent']["name"]=='gratitude'):
+        elif(info_dict['intent']["name"]=='showing_gratitude'):
             print("No Problem, it's my job!")
         elif(info_dict['intent']["name"]=='goodbye'):
             print(give_bye_reply())
