@@ -188,7 +188,8 @@ test = pd.read_csv("../data/testing.csv")
 disease = []
 for i in range (len(train)):
     # symptoms.append(train.columns[train.iloc[i]==1].to_list())
-    disease.append(train.iloc[i, -1])
+    if(train.iloc[i, -1] not in disease):
+        disease.append(train.iloc[i, -1])
 
 all_symptoms = list(train.columns[:-1]) 
 
