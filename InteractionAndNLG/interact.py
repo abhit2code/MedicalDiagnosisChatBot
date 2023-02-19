@@ -99,9 +99,7 @@ def extract_symptoms_conversation(q, info_dict):
             user_symptoms[questions[i]] = response4questions[i]
             if(suffering):
                 user_symptoms_yes_lst.append(questions[i])
-    # print("user_symptoms_yes_lst:", user_symptoms_yes_lst)
     diseases = possible_diseases(user_symptoms_yes_lst)
-    # print("possible diseases from extract_symptoms_conversation:", diseases)
     if(len(diseases)==1):
         return True
     return False
@@ -109,14 +107,17 @@ def extract_symptoms_conversation(q, info_dict):
 
 def printQuestionAndTakeInput(questions):
     for q in questions:
-        no = random.randint(0, len(question_asking_templates)-1)
-        if(no<2):
-            print(question_asking_templates[no].format(q))
+        if(q=="family_history"):
+            print("Is there family history with such symptoms?")
         else:
-            if(PersonSuffering == "user"):
-                print(question_asking_templates[no].format("you", clean_symptoms(q)))
+            no = random.randint(0, len(question_asking_templates)-1)
+            if(no<2):
+                print(question_asking_templates[no].format(q))
             else:
-                print(question_asking_templates[no].format("your " + PersonSuffering, clean_symptoms(q)))
+                if(PersonSuffering == "user"):
+                    print(question_asking_templates[no].format("you", clean_symptoms(q)))
+                else:
+                    print(question_asking_templates[no].format("your " + PersonSuffering, clean_symptoms(q)))
         user_reply = input(">>")
         info_dict = get_info_dict(user_reply)
         if(extract_symptoms_conversation(q, info_dict)):
