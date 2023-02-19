@@ -112,7 +112,7 @@ def printQuestionAndTakeInput(questions):
         else:
             no = random.randint(0, len(question_asking_templates)-1)
             if(no<2):
-                print(question_asking_templates[no].format(q))
+                print(question_asking_templates[no].format(clean_symptoms(q)))
             else:
                 if(PersonSuffering == "user"):
                     print(question_asking_templates[no].format("you", clean_symptoms(q)))
