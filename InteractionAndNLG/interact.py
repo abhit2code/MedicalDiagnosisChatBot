@@ -29,7 +29,7 @@ from sklearn.metrics import classification_report
 
 
 PersonSuffering = "user"
-question_asking_templates = ["was there any symptom like {}?", "was {} observed?", "Did {0} showed {1}?", "Did {0} faced {1}"]
+question_asking_templates = ["was there any symptom like {}?", "was {} observed?", "Did {0} showed {1}?", "Did {0} faced {1}?"]
 user_symptoms = {}
 user_symptoms_yes_lst = []
 
